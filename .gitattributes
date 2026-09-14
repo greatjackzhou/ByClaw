@@ -37,3 +37,14 @@
 *.sql   text eol=lf
 *.yml   text eol=lf
 *.yaml  text eol=lf
+
+# ── 例外：上游遗留的混合行尾生成物 ──────────────────────────────
+# deploy/middleware/initdb/02_ddl.sql 由 deploy/migrations/merge_migrations.py
+# 生成。上游在提交时该 blob 即为「混合行尾」（2165 行中 447 行为 CRLF），
+# 违反了「索引 blob 已归一化」这一 git 不变式，导致 eol 过滤器只作用于
+# 工作区一侧，从而产生永久的幻影改动，并可能在 git merge 时被判定为
+# 「本地有修改」而拒绝覆盖该文件。
+# 该文件为发布产物，由版本管理员在发版前重新生成，不应在此处做行尾改写；
+# 因此标记为 -text（不参与行尾转换），按字节比对即可保持干净。
+# 若上游后续重新生成该文件并再次引入混合行尾，此规则依然生效。
+deploy/middleware/initdb/02_ddl.sql -text
