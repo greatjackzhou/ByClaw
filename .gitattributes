@@ -1,0 +1,39 @@
+# 行尾与文本属性规则（定制轨）
+# 目的：消除「索引 LF / 工作区 CRLF」错配导致的 6656 文件假改动，
+#       并保证 prettier（endOfLine: 'lf'）与 .editorconfig（end_of_line = lf）校验通过。
+#
+# 参考：本项目 .editorconfig 与 byclaw-fe/.prettierrc.js 均要求 LF。
+
+# 默认：按内容自动识别文本，文本统一以 LF 存入索引并检出
+* text=auto eol=lf
+
+# Windows 专用脚本保留 CRLF
+*.ps1   text eol=crlf
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+# 明确声明为二进制，避免被误判为文本而做换行转换
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.jar   binary
+*.tgz   binary
+*.whl   binary
+*.zip   binary
+*.xlsx  binary
+*.docx  binary
+*.pptx  binary
+
+# 文本但需按 LF 处理的显式声明
+*.svg   text eol=lf
+*.sh    text eol=lf
+*.sql   text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
