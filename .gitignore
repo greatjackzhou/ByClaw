@@ -131,3 +131,8 @@ aoci.code.txt
 .aoci/
 
 MEMORY.md
+
+# 本地运行产物：IDE 回收站、docker 中间件数据卷
+.Trash-0/
+deploy/middleware/redisdata/
+deploy/middleware/data/
